@@ -1,0 +1,9 @@
+
+services:
+  dokuwiki:
+    build: ./
+    user: "1000:1000"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./storage:/storage
