@@ -2,7 +2,6 @@ FROM php:8.2-apache
 
 COPY root /
 
-
 RUN /bin/bash /build-setup.sh
 
 VOLUME /storage

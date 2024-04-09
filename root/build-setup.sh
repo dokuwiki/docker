@@ -4,12 +4,20 @@ set -e
 
 # This script is run during the container build process only.
 
-# Create volume mount point
-mkdir /storage
+# install dependencies
+apt-get update
+apt-get install -y libfreetype-dev libjpeg62-turbo-dev libpng-dev imagemagick libapache2-mod-xsendfile
+apt-get autoclean
+
+# build and enable PHP extensions
+docker-php-ext-configure gd --with-freetype --with-jpeg
+docker-php-ext-install -j$(nproc) gd
 
 # Apache setup
 a2enconf dokuwiki
 a2disconf security
+a2enmod rewrite
+a2enmod xsendfile
 
 # PHP ini setup
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -17,6 +25,9 @@ ln -s /storage/php.ini "$PHP_INI_DIR/conf.d/custom.ini" # make it easy to overri
 
 # Install DokuWiki
 curl -L https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz | tar xz --strip-components 1 -C /var/www/html
+
+# Create volume mount point
+mkdir /storage
 
 # Move writable directories and create symlinks to the storage volume
 mv /var/www/html/conf /var/www/html/conf.core
