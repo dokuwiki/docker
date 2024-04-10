@@ -20,4 +20,10 @@ $config_cascade['scheme']['default'] = ['/var/www/html/conf.core/scheme.conf'];
 $config_cascade['smileys']['default'] = ['/var/www/html/conf.core/smileys.conf'];
 $config_cascade['wordblock']['default'] = ['/var/www/html/conf.core/wordblock.conf'];
 $config_cascade['plugins']['default'] = ['/var/www/html/conf.core/plugins.php'];
+$config_cascade['plugins']['default'] = ['/var/www/html/conf.core/plugins.php'];
+$config_cascade['plugins']['protected'] = [
+    '/var/www/html/conf.core/plugins.required.php',
+    '/var/www/html/conf.core/plugins.docker.php',
+    DOKU_CONF . 'plugins.protected.php'
+];
 
