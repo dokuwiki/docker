@@ -1,7 +1,11 @@
 FROM php:8.2-apache
 
-COPY root /
+ENV PHP_UPLOADLIMIT 128M
+ENV PHP_MEMORYLIMIT 256M
+ENV PHP_TIMEZONE UTC
 
+
+COPY root /
 RUN /bin/bash /build-setup.sh
 
 VOLUME /storage

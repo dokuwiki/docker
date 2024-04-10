@@ -5,5 +5,7 @@ services:
     user: "1000:1000"
     ports:
       - "8080:8080"
+    environment:
+      - PHP_TIMEZONE=Europe/Berlin
     volumes:
       - ./storage:/storage
