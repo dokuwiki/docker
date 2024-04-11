@@ -5,21 +5,22 @@ installation. It is meant to be used with a reverse proxy that handles SSL termi
 not worth it to use this image for a standalone installation (
 read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives).
 
-## Usage
+## Quick Start:
 
-See docker-compose.yml for an example setup.
+    docker run -p 8080:8080 --user 1000:1000 -v /path/to/storage:/storage dokuwiki/dokuwiki:stable
 
-  * Exposed Port: 8080
-  * Volume: /storage
-  * Can be run as non-root user. Be sure the storage volume is writable by the given uid.
+* Exposed Port: `8080`
+* Volume: `/storage`
+* Can be run as non-root user. Be sure the storage volume is writable by the given uid.
+* Available tags: `stable`, `oldstable` and versions like `2020-07-29a`. `latest` is an alias for `stable`.
 
-On first run, use DokuWiki's installer to configure the wiki as usual.
+On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to configure the wiki as usual.
 
 ## Features
 
-  * xsendfile configured and enabled
-  * imagemagick installed and enabled
-  * nice URLs via rewriting configured and enabled
+* xsendfile configured and enabled
+* imagemagick installed and enabled
+* nice URLs via rewriting configured and enabled
 
 ## PHP Configuration & Environment
 
@@ -34,7 +35,7 @@ Custom PHP configuration values can be set in a `php.ini` file in the storage vo
 ## How this image handles user data
 
 Besides the obvious page and media data, extensions and configuration need to be persisted over container replacements.
-However it needs to be differentiated between user installed extensions and configuration and bundled extensions and
+However, it needs to be differentiated between user installed extensions and configuration and bundled extensions and
 configuration.
 
 This image uses a single storage volume for all user data.
@@ -50,3 +51,11 @@ Required symlinks are rechecked on every container restart.
 
 This setup ensures that all adjustments you may make via the Admin interface will be stored correctly in the storage
 volume while all bundled data is kept in the container and is correctly updated/replaced when the container is updated.
+
+# Development
+
+To manually build the image:
+
+    docker build -t dokuwiki/dokuwiki:stable .
+
+Builds and deployments are currently only done manually by triggering the GitHub Actions workflow.
