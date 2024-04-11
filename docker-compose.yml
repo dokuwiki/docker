@@ -1,11 +1,13 @@
-
 services:
   dokuwiki:
-    build: ./
+    build:
+      context: ./
+      args:
+        DOKUWIKI_VERSION: stable
     user: "1000:1000"
     ports:
       - "8080:8080"
     environment:
-      - PHP_TIMEZONE=Europe/Berlin
+      PHP_TIMEZONE: Europe/Berlin
     volumes:
       - ./storage:/storage

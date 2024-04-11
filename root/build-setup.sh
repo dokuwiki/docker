@@ -3,27 +3,12 @@ set -x
 set -e
 
 # This script is run during the container build process only.
+#
+# It installs DokuWiki and prepares the storage volume setup.
 
-# install dependencies
-apt-get update
-apt-get install -y \
-        imagemagick \
-        libapache2-mod-xsendfile \
-        libbz2-dev \
-        libfreetype-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libsqlite3-dev
-apt-get autoclean
-
-# build and enable PHP extensions
-docker-php-ext-configure gd --with-freetype --with-jpeg
-docker-php-ext-install -j$(nproc) gd
-docker-php-ext-install -j$(nproc) bz2
-docker-php-ext-install -j$(nproc) opcache
-docker-php-ext-install -j$(nproc) pdo_sqlite
-docker-php-ext-install -j$(nproc) intl
+# PHP ini setup
+mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+ln -s /storage/php.ini "$PHP_INI_DIR/conf.d/custom.ini" # make it easy to override php.ini
 
 # Apache setup
 a2enconf dokuwiki
@@ -31,12 +16,9 @@ a2disconf security
 a2enmod rewrite
 a2enmod xsendfile
 
-# PHP ini setup
-mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-ln -s /storage/php.ini "$PHP_INI_DIR/conf.d/custom.ini" # make it easy to override php.ini
-
 # Install DokuWiki
-curl -L https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz | tar xz --strip-components 1 -C /var/www/html
+curl -L "https://download.dokuwiki.org/src/dokuwiki/dokuwiki-${DOKUWIKI_VERSION}.tgz" \
+    | tar xz --strip-components 1 -C /var/www/html
 
 # Create volume mount point
 mkdir /storage
@@ -51,5 +33,5 @@ ln -s /storage/lib/plugins /var/www/html/lib/plugins
 mv /var/www/html/lib/tpl /var/www/html/lib/tpl.core
 ln -s /storage/lib/tpl /var/www/html/lib/tpl
 
-# delete self
-rm -- "$0"
+# delete all build files
+rm -- /build-*
