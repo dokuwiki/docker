@@ -1,9 +1,6 @@
 services:
   dokuwiki:
-    build:
-      context: ./
-      args:
-        DOKUWIKI_VERSION: stable
+    image: dokuwiki/dokuwiki:stable
     user: "1000:1000"
     ports:
       - "8080:8080"

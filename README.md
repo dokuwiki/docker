@@ -14,6 +14,8 @@ read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for al
 * Can be run as non-root user. Be sure the storage volume is writable by the given uid.
 * Available tags: `stable`, `oldstable` and versions like `2020-07-29a`. `latest` is an alias for `stable`.
 
+An example [docker-compose file](docker-compose.yml) is included in the repository.
+
 On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to configure the wiki as usual.
 
 ## Features
@@ -21,6 +23,9 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 * xsendfile configured and enabled
 * imagemagick installed and enabled
 * nice URLs via rewriting configured and enabled
+
+Note: This image does **not** include a mail server. You need to configure DokuWiki to use an external mail server, this
+most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
 
 ## PHP Configuration & Environment
 
@@ -52,10 +57,11 @@ Required symlinks are rechecked on every container restart.
 This setup ensures that all adjustments you may make via the Admin interface will be stored correctly in the storage
 volume while all bundled data is kept in the container and is correctly updated/replaced when the container is updated.
 
-# Development
+## Development
 
 To manually build the image:
 
     docker build -t dokuwiki/dokuwiki:stable .
 
-Builds and deployments are currently only done manually by triggering the GitHub Actions workflow.
+Builds and deployments are currently only done by manually triggering
+the [GitHub Actions workflow](actions/workflows/docker.yml).
