@@ -20,7 +20,8 @@ for ext in plugins tpl; do
   mkdir -p /storage/lib/$ext
   for dir in /var/www/html/lib/$ext.core/*; do
     base=$(basename $dir)
-    [ -d "/storage/lib/$ext/$base" ] && rm -rf /storage/lib/$ext/$base
+    [ -d "/storage/lib/$ext/$base" ] && rm -r /storage/lib/$ext/$base
+    [ -f "/storage/lib/$ext/$base" ] && rm /storage/lib/$ext/$base
     [ -L "/storage/lib/$ext/$base" ] && rm /storage/lib/$ext/$base
     ln -s $dir /storage/lib/$ext/$base
   done
