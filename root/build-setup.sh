@@ -26,8 +26,6 @@ mkdir /storage
 # Move writable directories and create symlinks to the storage volume
 mv /var/www/html/conf /var/www/html/conf.core
 ln -s /storage/conf /var/www/html/conf
-mv /var/www/html/data /var/www/html/data.core
-ln -s /storage/data /var/www/html/data
 mv /var/www/html/lib/plugins /var/www/html/lib/plugins.core
 ln -s /storage/lib/plugins /var/www/html/lib/plugins
 mv /var/www/html/lib/tpl /var/www/html/lib/tpl.core

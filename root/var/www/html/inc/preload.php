@@ -9,6 +9,10 @@
 if (!defined('DOKU_CONF')) define('DOKU_CONF', __DIR__ . '/../conf/');
 include __DIR__ . '/config_cascade.php';
 $config_cascade['main']['default'] = ['/var/www/html/conf.core/dokuwiki.php', '/var/www/html/conf.core/docker.php'];
+$config_cascade['main']['protected'] = [
+    DOKU_CONF . 'local.protected.php',
+    '/var/www/html/conf.core/docker.protected.php'
+];
 $config_cascade['acronyms']['default'] = ['/var/www/html/conf.core/acronyms.conf'];
 $config_cascade['entities']['default'] = ['/var/www/html/conf.core/entities.conf'];
 $config_cascade['interwiki']['default'] = ['/var/www/html/conf.core/interwiki.conf'];
