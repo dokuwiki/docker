@@ -5,7 +5,7 @@ set -e
 # copy core data directories to the volume
 # this will update syntax.txt etc. on image update
 mkdir -p /storage/data
-cp -r /var/www/html/data/. /storage/data  # includes hidden files
+cp -r /var/www/html/data.core/. /storage/data  # includes hidden files
 
 # ensure the conf directory exists, defaults are set via config_cascade
 mkdir -p /storage/conf
