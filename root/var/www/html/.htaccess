@@ -1,7 +1,12 @@
 # enable rewriting by default
-
 RewriteEngine on
 
+# Support the ! syntax for farm animals
+RewriteRule ^!([^/]+)/(.*)  $2?animal=$1 [QSA,DPI]
+RewriteRule ^!([^/]+)$      ?animal=$1 [QSA,DPI]
+Options +FollowSymLinks
+
+# pretty urls
 RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
 RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
 RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
