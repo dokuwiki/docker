@@ -23,6 +23,7 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 * xsendfile configured and enabled
 * imagemagick installed and enabled
 * nice URLs via rewriting configured and enabled
+* farming support via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer)
 
 Note: This image does **not** include a mail server. You need to configure DokuWiki to use an external mail server, this
 most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
@@ -36,6 +37,12 @@ The container runs the standard production php.ini. Some options can be set via 
 * `PHP_TIMEZONE` - The timezone. Default `UTC`
 
 Custom PHP configuration values can be set in a `php.ini` file in the storage volume.
+
+## Farming
+
+This image supports farming via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer). To use it, install the plugin and configure it as described in the plugin documentation. The initial farm configuration is already done in this image. The farm directory is `/storage/farm`.
+
+Use a reverse proxy to route animal requests to this container.
 
 ## How this image handles user data
 
