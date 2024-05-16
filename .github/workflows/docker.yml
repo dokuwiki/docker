@@ -1,6 +1,8 @@
 name: Build and Publish Docker Images
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "23 0 * * *"
 
 jobs:
   buildmatrix:
@@ -50,3 +52,13 @@ jobs:
             ${{ matrix.release.type == 'stable' && 'dokuwiki/dokuwiki:latest' || '' }}
           build-args: |
              DOKUWIKI_VERSION=${{ matrix.release.type == 'master' && 'master' || matrix.release.date }}
+
+  workflow-keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: liskin/gh-workflow-keepalive@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
