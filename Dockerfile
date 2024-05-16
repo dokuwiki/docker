@@ -1,4 +1,4 @@
-FROM php:8.2-apache AS dokuwiki-base
+FROM php:8.3-apache AS dokuwiki-base
 
 COPY root/build-deps.sh /
 RUN /bin/bash /build-deps.sh
