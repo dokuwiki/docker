@@ -2,8 +2,8 @@
 
 This image is based on the official [PHP Apache image](https://hub.docker.com/_/php) and provides a DokuWiki
 installation. It is meant to be used with a reverse proxy that handles SSL termination and authentication. It's probably
-not worth it to use this image for a standalone installation (
-read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives).
+not worth it to use this image for a standalone installation 
+(read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives).
 
 ## Quick Start:
 
@@ -12,7 +12,7 @@ read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for al
 * Exposed Port: `8080`
 * Volume: `/storage`
 * Can be run as non-root user. Be sure the storage volume is writable by the given uid.
-* Available tags: `stable`, `oldstable` and versions like `2020-07-29a`. `latest` is an alias for `stable`.
+* Available tags: `stable`, `oldstable`, `master` and versions like `2020-07-29a`. `latest` is an alias for `stable`.
 
 An example [docker-compose file](docker-compose.yml) is included in the repository.
 
@@ -26,7 +26,7 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 * farming support via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer)
 
 Note: This image does **not** include a mail server. You need to configure DokuWiki to use an external mail server, this
-most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
+ia most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
 
 ## PHP Configuration & Environment
 
@@ -40,7 +40,9 @@ Custom PHP configuration values can be set in a `php.ini` file in the storage vo
 
 ## Farming
 
-This image supports farming via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer). To use it, install the plugin and configure it as described in the plugin documentation. The initial farm configuration is already done in this image. The farm directory is `/storage/farm`.
+This image supports farming via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer). To use it, install the
+plugin and configure it as described in the plugin documentation. The initial farm configuration is already done in this
+image. The farm directory is `/storage/farm`.
 
 Use a reverse proxy to route animal requests to this container.
 
