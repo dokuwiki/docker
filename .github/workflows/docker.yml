@@ -12,11 +12,11 @@ jobs:
       - name: Set up matrix
         id: set-matrix
         run: |
-          echo "matrix=$(curl https://download.dokuwiki.org/version | jq -c 'del(.master) | {release: [.[]]}')" >> $GITHUB_OUTPUT
+          echo "matrix=$(curl https://download.dokuwiki.org/version | jq -c '{release: [.[]]}')" >> $GITHUB_OUTPUT
 
   build:
     needs: buildmatrix
-    name: Build Docker Image ${{ matrix.release.date }}
+    name: Build Docker Image for ${{ matrix.release.type }}
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.buildmatrix.outputs.matrix)}}
@@ -45,8 +45,8 @@ jobs:
           cache-from: type=gha, scope=${{ github.workflow }}
           cache-to: type=gha, scope=${{ github.workflow }}
           tags: |
-            dokuwiki/dokuwiki:${{ matrix.release.date }}
+            ${{ matrix.release.type == 'master' && ' ' || format('dokuwiki/dokuwiki:{0}', matrix.release.date) }}
             dokuwiki/dokuwiki:${{ matrix.release.type }}
             ${{ matrix.release.type == 'stable' && 'dokuwiki/dokuwiki:latest' || '' }}
           build-args: |
-             DOKUWIKI_VERSION=${{ matrix.release.date }}
+             DOKUWIKI_VERSION=${{ matrix.release.type == 'master' && 'master' || matrix.release.date }}

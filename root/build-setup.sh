@@ -16,9 +16,12 @@ a2disconf security
 a2enmod rewrite
 a2enmod xsendfile
 
-# Install DokuWiki
-curl -L "https://download.dokuwiki.org/src/dokuwiki/dokuwiki-${DOKUWIKI_VERSION}.tgz" \
-    | tar xz --strip-components 1 -C /var/www/html
+# Download DokuWiki from the official website or from GitHub
+curl --fail -L "https://download.dokuwiki.org/src/dokuwiki/dokuwiki-${DOKUWIKI_VERSION}.tgz" -o dokuwiki.tgz || \
+curl --fail -L "https://github.com/dokuwiki/dokuwiki/archive/refs/heads/master.tar.gz" -o dokuwiki.tgz
+
+# Extract DokuWiki to the web root
+tar xzf dokuwiki.tgz --strip-components 1 -C /var/www/html && rm dokuwiki.tgz
 
 # Create volume mount point
 mkdir /storage
