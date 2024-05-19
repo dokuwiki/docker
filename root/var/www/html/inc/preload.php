@@ -9,6 +9,8 @@ if (file_exists(__DIR__ . '/../lib/plugins/farmer/DokuWikiFarmCore.php')) {
 // load the standard cascade if the farmer hasn't already loaded it
 if (!defined('DOKU_CONF')) {
     define('DOKU_CONF', __DIR__ . '/../conf/');
+}
+if (!isset($config_cascade) || $config_cascade === []) {
     include __DIR__ . '/config_cascade.php';
 }
 
