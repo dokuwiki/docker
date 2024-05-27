@@ -26,7 +26,7 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 * farming support via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer)
 
 Note: This image does **not** include a mail server. You need to configure DokuWiki to use an external mail server, this
-ia most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
+is most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).
 
 ## PHP Configuration & Environment
 
