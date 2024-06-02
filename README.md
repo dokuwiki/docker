@@ -72,5 +72,5 @@ To manually build the image:
 
     docker build -t dokuwiki/dokuwiki:stable .
 
-Builds and deployments are currently only done by manually triggering
+Builds and deployments are currently done daily using
 the [GitHub Actions workflow](https://github.com/dokuwiki/docker/actions/workflows/docker.yml).
