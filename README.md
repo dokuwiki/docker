@@ -24,6 +24,7 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 * imagemagick installed and enabled
 * nice URLs via rewriting configured and enabled
 * farming support via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer)
+* docker health check running basic DokuWiki checks (every 30 seconds, 3 retries)
 
 Note: This image does **not** include a mail server. You need to configure DokuWiki to use an external mail server, this
 is most easily achieved using the [SMTP plugin](https://www.dokuwiki.org/plugin:smtp).

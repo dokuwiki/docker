@@ -18,5 +18,8 @@ RUN /bin/bash /build-setup.sh
 VOLUME /storage
 EXPOSE 8080
 
+HEALTHCHECK --timeout=5s \
+    CMD curl --silent --fail-with-body http://localhost:8080/health.php || exit 1
+
 RUN chmod +x /dokuwiki-entrypoint.sh
 ENTRYPOINT ["/dokuwiki-entrypoint.sh"]
