@@ -2,30 +2,17 @@
 set -x
 set -e
 
-# copy core data directories to the volume
-# this will update syntax.txt etc. on image update
-mkdir -p /storage/data
-cp -r /var/www/html/data.core/. /storage/data  # includes hidden files
-
-# ensure the conf directory exists, defaults are set via config_cascade
-mkdir -p /storage/conf
-
-# installer does not use config_cascade so we have to symlink the license file
-[ -L /storage/conf/license.php ] && rm /storage/conf/license.php
-[ -e /storage/conf/license.php ] && rm /storage/conf/license.php
-ln -s /var/www/html/conf.core/license.php /storage/conf/license.php
-
-# core extensions are symlinked to the volume
-for ext in plugins tpl; do
-  mkdir -p /storage/lib/$ext
-  for dir in /var/www/html/lib/$ext.core/*; do
-    base=$(basename $dir)
-    [ -d "/storage/lib/$ext/$base" ] && rm -r /storage/lib/$ext/$base
-    [ -f "/storage/lib/$ext/$base" ] && rm /storage/lib/$ext/$base
-    [ -L "/storage/lib/$ext/$base" ] && rm /storage/lib/$ext/$base
-    ln -s $dir /storage/lib/$ext/$base
-  done
-done
+# when the container runs as root, apache will drop privileges and run
+# as www-data(33), we do the same for the storage setup
+if [ "$EUID" -eq 0 ]; then
+  # make sure we have access to the storage volume
+  chown -R www-data:www-data /storage
+  # drop privileges and run setup
+  setpriv --reuid=33 --regid=33 --init-groups /dokuwiki-storagesetup.sh
+else
+  # we are already running as unprivileged user, just run setup
+  /dokuwiki-storagesetup.sh
+fi
 
 # run parent image's entrypoint
 exec docker-php-entrypoint apache2-foreground
