@@ -1,7 +1,7 @@
 <?php
 
 define('DOKU_UNITTEST', 1);
-define('DOKU_INC', __DIR__ . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 
 header('Content-Type: text/plain; charset=utf-8');
 try {
