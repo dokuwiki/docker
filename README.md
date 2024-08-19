@@ -3,7 +3,9 @@
 This image is based on the official [PHP Apache image](https://hub.docker.com/_/php) and provides a DokuWiki
 installation. It is meant to be used with a reverse proxy that handles SSL termination and authentication. It's probably
 not worth it to use this image for a standalone installation 
-(read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives).
+(read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives). Running Docker without a
+proper understanding of Linux, networking and Docker itself is not recommended. If you are a novice, you should probably
+use a shared hosting provider instead.
 
 ## Quick Start:
 
@@ -71,7 +73,7 @@ volume while all bundled data is kept in the container and is correctly updated/
 
 To manually build the image:
 
-    docker build -t dokuwiki/dokuwiki:stable .
+    docker build --build-arg="DOKUWIKI_VERSION=stable" -t dokuwiki/dokuwiki:stable .
 
 Builds and deployments are currently done daily using
 the [GitHub Actions workflow](https://github.com/dokuwiki/docker/actions/workflows/docker.yml).
