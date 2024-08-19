@@ -2,9 +2,12 @@
 set -x
 set -e
 
+echo "Started under UID $(id -u) GID $(id -g)."
+
 # when the container runs as root, apache will drop privileges and run
 # as www-data(33), we do the same for the storage setup
 if [ "$EUID" -eq 0 ]; then
+  echo "Running as root, dropping privileges to 33:33"
   # make sure we have access to the storage volume
   chown -R www-data:www-data /storage
   # drop privileges and run setup

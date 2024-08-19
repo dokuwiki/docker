@@ -1,10 +1,16 @@
+# This is an example of a docker-compose file for DokuWiki. Familiarity with Docker and docker-compose is assumed.
+# Adjust this to your needs before using.
+
 services:
   dokuwiki:
-    image: dokuwiki/dokuwiki:stable
-    user: "1000:1000"
+    image: dokuwiki/dokuwiki:stable # other tags: master, <date> or <codename>
+    user: "1000:1000" # adjust to your required user id
+    restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8080:8080" # internal port is 8080, map to what you need
     environment:
       PHP_TIMEZONE: Europe/Berlin
+      #PHP_MEMORYLIMIT: 256M
+      #PHP_UPLOADLIMIT: 128M
     volumes:
       - ./storage:/storage
