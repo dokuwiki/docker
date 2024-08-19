@@ -16,6 +16,7 @@ apt-get install -y \
         libfreetype-dev \
         libicu-dev \
         libjpeg62-turbo-dev \
+        libldap2-dev \
         libpng-dev \
         libsqlite3-dev
 apt-get autoclean
@@ -27,6 +28,7 @@ docker-php-ext-install -j"$(nproc)" bz2
 docker-php-ext-install -j"$(nproc)" opcache
 docker-php-ext-install -j"$(nproc)" pdo_sqlite
 docker-php-ext-install -j"$(nproc)" intl
+docker-php-ext-install -j"$(nproc)" ldap
 
 # delete self
 rm -- "$0"
