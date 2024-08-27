@@ -11,15 +11,28 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Cache Setup
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: .github/matrix.cache/
+          key: ${{ runner.os }}-matrix-${{ hashFiles('.github/matrix.php') }}
       - name: Set up matrix
         id: set-matrix
         run: |
-          echo "matrix=$(curl https://download.dokuwiki.org/version | jq -c '{release: [.[]]}')" >> $GITHUB_OUTPUT
+          php .github/matrix.php >> $GITHUB_OUTPUT
 
   build:
     needs: buildmatrix
     name: Build Docker Image for ${{ matrix.release.type }}
     runs-on: ubuntu-latest
+    if: ${{ needs.buildmatrix.outputs.matrix != '[]' }}
     strategy:
       matrix: ${{fromJson(needs.buildmatrix.outputs.matrix)}}
     steps:
