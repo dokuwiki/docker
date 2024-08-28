@@ -22,10 +22,11 @@ function getVersions()
 /**
  * Get the last commit of a branch
  *
+ * @param string $repo
  * @param string $branch
  * @return string
  */
-function getLastCommit($branch)
+function getLastCommit($repo, $branch)
 {
     $opts = [
         'http' => [
@@ -38,7 +39,7 @@ function getLastCommit($branch)
     ];
     $context = stream_context_create($opts);
 
-    $data = file_get_contents('https://api.github.com/repos/dokuwiki/dokuwiki/commits/' . $branch, false, $context);
+    $data = file_get_contents("https://api.github.com/repos/dokuwiki/$repo/commits/$branch", false, $context);
     $json = json_decode($data, true);
     return $json['sha'];
 }
@@ -86,13 +87,13 @@ function getImageTag()
 
 
 $result = [];
-$self = $_ENV['GITHUB_SHA'] ?? 'unknown';
+$self = getLastCommit('docker', 'main');
 $upstreamTag = getImageTag();
 $image = getImageId($upstreamTag);
 
 foreach (getVersions() as $release => $info) {
     $branch = $release === 'oldstable' ? 'old-stable' : $release;
-    $commit = getLastCommit($branch);
+    $commit = getLastCommit('dokuwiki', $branch);
     $ident = join('-', [$release, $commit, $image, $self]);
     $cache = '.github/matrix.cache/' . $release;
 
