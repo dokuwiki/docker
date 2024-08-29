@@ -7,6 +7,9 @@ not worth it to use this image for a standalone installation
 proper understanding of Linux, networking and Docker itself is not recommended. If you are a novice, you should probably
 use a shared hosting provider instead.
 
+If you use this image, **please leave a star at [Docker Hub](https://hub.docker.com/r/dokuwiki/dokuwiki)⭐**- it helps
+to improve the visibility in the registry.
+
 ## Quick Start:
 
     docker run -p 8080:8080 --user 1000:1000 -v /path/to/storage:/storage dokuwiki/dokuwiki:stable
