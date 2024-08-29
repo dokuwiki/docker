@@ -7,28 +7,22 @@ set -e
 # It installs the OS and webserver dependencies and builds the required PHP extensions.
 # The resulting container is DokuWiki independent and can be reused for different version containers.
 
-# install dependencies
+# install additional packages
 apt-get update
-apt-get install -y \
+apt-get install -y --no-install-recommends \
         imagemagick \
-        libapache2-mod-xsendfile \
-        libbz2-dev \
-        libfreetype-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libldap2-dev \
-        libpng-dev \
-        libsqlite3-dev
+        libapache2-mod-xsendfile
 apt-get autoclean
 
-# build and enable PHP extensions
-docker-php-ext-configure gd --with-freetype --with-jpeg
-docker-php-ext-install -j"$(nproc)" gd
-docker-php-ext-install -j"$(nproc)" bz2
-docker-php-ext-install -j"$(nproc)" opcache
-docker-php-ext-install -j"$(nproc)" pdo_sqlite
-docker-php-ext-install -j"$(nproc)" intl
-docker-php-ext-install -j"$(nproc)" ldap
+# install extensions
+curl -sSLf -o install-php-extensions \
+     https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions
+chmod +x install-php-extensions
+./install-php-extensions gd bz2 opcache pdo_sqlite intl ldap
+rm install-php-extensions
+
+# remove package cache
+apt-get clean
 
 # delete self
 rm -- "$0"
