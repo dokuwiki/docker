@@ -97,8 +97,9 @@ foreach (getVersions() as $release => $info) {
     $ident = join('-', [$release, $commit, $image, $self]);
     $cache = '.github/matrix.cache/' . $release;
 
-    fwrite(STDERR, "Ident: $ident\n");
     $last = @file_get_contents($cache);
+    fwrite(STDERR, "Old: $last\n");
+    fwrite(STDERR, "New: $ident\n");
     if ($last === $ident) {
         // this combination has been built before
         fwrite(STDERR, "No change. Skipping $release\n");
