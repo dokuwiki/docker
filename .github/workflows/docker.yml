@@ -22,7 +22,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .github/matrix.cache/
-          key: ${{ runner.os }}-matrix-${{ hashFiles('.github/matrix.php') }}
+          key: ${{ runner.os }}-matrix-${{ github.run_id }}
+          restore-keys: |
+                ${{ runner.os }}-matrix-
       - name: Set up matrix
         id: set-matrix
         run: |
