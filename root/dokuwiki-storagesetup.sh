@@ -16,7 +16,7 @@ mkdir -p /storage/conf
 ln -s /var/www/html/conf.core/license.php /storage/conf/license.php
 
 # core extensions are symlinked to the volume
-for ext in plugins tpl images; do
+for ext in plugins tpl; do
   mkdir -p /storage/lib/$ext
   for dir in /var/www/html/lib/$ext.core/*; do
     base=$(basename $dir)
@@ -26,4 +26,17 @@ for ext in plugins tpl images; do
     ln -s $dir /storage/lib/$ext/$base
   done
 done
+
+# smileys are symlinked to volume so they work per dokuwiki docs
+for ext in smileys; do
+  mkdir -p /storage/lib/images/$ext
+  for dir in /var/www/html/lib/images/$ext.core/*; do
+    base=$(basename $dir)
+    [ -d "/storage/lib/images/$ext/$base" ] && rm -r /storage/lib/images/$ext/$base
+    [ -f "/storage/lib/images/$ext/$base" ] && rm /storage/lib/images/$ext/$base
+    [ -L "/storage/lib/images/$ext/$base" ] && rm /storage/lib/images/$ext/$base
+    ln -s $dir /storage/lib/images/$ext/$base
+  done
+done
+
 
