@@ -44,6 +44,17 @@ The container runs the standard production php.ini. Some options can be set via 
 
 Custom PHP configuration values can be set in a `php.ini` file in the storage volume.
 
+## Permissions
+
+When the container is started without setting an explicit user id (as the compose file suggests), the image will start as
+`root` (uid:`0` gid:`0`) and Apache will drop privileges to `www-data` (uid: `33` gid:`33`). Before this happens, the
+entrypoint script will use the `root` privileges to recursively chown everything in `/storage` to `33:33`.
+
+When started with any other user id, the whole container will run under that id. You have to ensure that anything mounted
+to `/storage` is writable by that uid.
+
+The entry script will print some info about it's effective uid and gid during container start.
+
 ## Farming
 
 This image supports farming via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer). To use it, install the
