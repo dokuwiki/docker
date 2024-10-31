@@ -16,7 +16,7 @@ mkdir -p /storage/conf
 ln -s /var/www/html/conf.core/license.php /storage/conf/license.php
 
 # core extensions are symlinked to the volume
-for ext in plugins tpl; do
+for ext in plugins tpl "images/smileys"; do
   mkdir -p /storage/lib/$ext
   for dir in /var/www/html/lib/$ext.core/*; do
     base=$(basename $dir)
@@ -26,4 +26,3 @@ for ext in plugins tpl; do
     ln -s $dir /storage/lib/$ext/$base
   done
 done
-
