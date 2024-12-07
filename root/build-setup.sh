@@ -15,7 +15,6 @@ a2enconf dokuwiki
 a2disconf security
 a2enmod rewrite
 a2enmod xsendfile
-a2enmod remoteip
 
 # Download DokuWiki from the official website or from GitHub
 curl --fail -L "https://download.dokuwiki.org/src/dokuwiki/dokuwiki-${DOKUWIKI_VERSION}.tgz" -o dokuwiki.tgz || \

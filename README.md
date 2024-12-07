@@ -26,7 +26,6 @@ On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to 
 ## Features
 
 * xsendfile configured and enabled
-* mod_remoteip enabled and configured to trust the standard Docker networking range
 * imagemagick installed and enabled
 * nice URLs via rewriting configured and enabled
 * farming support via the [farmer plugin](https://www.dokuwiki.org/plugin:farmer)
@@ -44,11 +43,6 @@ The container runs the standard production php.ini. Some options can be set via 
 * `PHP_TIMEZONE` - The timezone. Default `UTC`
 
 Custom PHP configuration values can be set in a `php.ini` file in the storage volume.
-
-The remoteip module is enabled and configured to use the `X-Forwarded-For` header and trust the standard Docker networking range. You can override both using the following environment variables:
-
-* `FORWARDING_PROXY` - The trusted proxy IP range. Default `172.16.0.0/12`
-* `FORWARDING_HEADER` - The header to trust for the client IP. Default `X-Forwarded-For`
 
 ## Permissions
 
