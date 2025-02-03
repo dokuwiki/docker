@@ -89,5 +89,9 @@ To manually build the image:
 
     docker build --build-arg="DOKUWIKI_VERSION=stable" -t dokuwiki/dokuwiki:stable .
 
-Builds and deployments are currently done daily using
-the [GitHub Actions workflow](https://github.com/dokuwiki/docker/actions/workflows/docker.yml).
+Additional PHP extensions can be added to the image using the `PHP_EXTENSIONS` build argument. The value should be a space separated list of PHP extension names as understood by [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer). For example:
+
+    docker build --build-arg="PHP_EXTENSIONS=pdo_pgsql pdo_mysql" -t dokuwiki/dokuwiki:stable .
+
+Builds are currently done daily using
+the [GitHub Actions workflow](https://github.com/dokuwiki/docker/actions/workflows/docker.yml) and new images are pushed for all upstream changes.

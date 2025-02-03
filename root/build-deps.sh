@@ -18,8 +18,9 @@ apt-get autoclean
 curl -sSLf -o install-php-extensions \
      https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions
 chmod +x install-php-extensions
-./install-php-extensions gd bz2 opcache pdo_sqlite intl ldap
+./install-php-extensions gd bz2 opcache pdo_sqlite intl ldap $PHP_EXTENSIONS
 rm install-php-extensions
+php -m
 
 # remove package cache
 apt-get clean
