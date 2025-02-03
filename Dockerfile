@@ -1,5 +1,8 @@
 FROM php:8.2-apache AS dokuwiki-base
 
+# additional extensions can be passed as build-arg
+ARG PHP_EXTENSIONS=""
+
 COPY root/build-deps.sh /
 RUN /bin/bash /build-deps.sh
 
