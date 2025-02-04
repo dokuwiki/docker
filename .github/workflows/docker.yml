@@ -37,6 +37,7 @@ jobs:
     if: ${{ needs.buildmatrix.outputs.matrix != '[]' }}
     strategy:
       matrix: ${{fromJson(needs.buildmatrix.outputs.matrix)}}
+      fail-fast: false
     steps:
       -
         name: Checkout
