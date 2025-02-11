@@ -33,7 +33,7 @@ jobs:
   build:
     needs: buildmatrix
     name: Build Docker Image for ${{ matrix.release.type }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # see dokuwiki/docker#27
     if: ${{ needs.buildmatrix.outputs.matrix != '[]' }}
     strategy:
       matrix: ${{fromJson(needs.buildmatrix.outputs.matrix)}}
