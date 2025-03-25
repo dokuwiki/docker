@@ -38,6 +38,9 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.buildmatrix.outputs.matrix)}}
       fail-fast: false
+    permissions:
+      contents: read
+      packages: write
     steps:
       -
         name: Checkout
@@ -55,6 +58,48 @@ jobs:
           username: splitbrain
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Prepare Docker Tags
+        id: docker_tags
+        run: |
+          # Initialize tag arrays
+          TAGS=()
+          
+          # DockerHub Tags
+          if [[ "${{ matrix.release.type }}" == "master" ]]; then
+            TAGS+=("dokuwiki/dokuwiki:master")
+          else
+            TAGS+=("dokuwiki/dokuwiki:${{ matrix.release.date }}")
+            TAGS+=("dokuwiki/dokuwiki:${{ matrix.release.type }}")
+            if [[ "${{ matrix.release.type }}" == "stable" ]]; then
+              TAGS+=("dokuwiki/dokuwiki:latest")
+            fi
+          fi
+          
+          # GitHub Packages Tags
+          if [[ "${{ matrix.release.type }}" == "master" ]]; then
+            TAGS+=("ghcr.io/dokuwiki/dokuwiki:master")
+          else
+            TAGS+=("ghcr.io/dokuwiki/dokuwiki:${{ matrix.release.date }}")
+            TAGS+=("ghcr.io/dokuwiki/dokuwiki:${{ matrix.release.type }}")
+            if [[ "${{ matrix.release.type }}" == "stable" ]]; then
+              TAGS+=("ghcr.io/dokuwiki/dokuwiki:latest")
+            fi
+          fi
+          
+          # Convert array to multiline string for GitHub Actions
+          {
+            echo "tags<<EOF"
+            printf "%s\n" "${TAGS[@]}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+      -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -62,10 +107,7 @@ jobs:
           push: true
           cache-from: type=gha, scope=${{ github.workflow }}
           cache-to: type=gha, scope=${{ github.workflow }}
-          tags: |
-            ${{ matrix.release.type == 'master' && ' ' || format('dokuwiki/dokuwiki:{0}', matrix.release.date) }}
-            dokuwiki/dokuwiki:${{ matrix.release.type }}
-            ${{ matrix.release.type == 'stable' && 'dokuwiki/dokuwiki:latest' || '' }}
+          tags: ${{ steps.docker_tags.outputs.tags }}
           build-args: |
              DOKUWIKI_VERSION=${{ matrix.release.type == 'master' && 'master' || matrix.release.date }}
 
