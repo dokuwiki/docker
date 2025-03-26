@@ -3,7 +3,8 @@
 
 services:
   dokuwiki:
-    image: dokuwiki/dokuwiki:stable # other tags: master, <date> or <codename>
+    image: dokuwiki/dokuwiki: # other tags: master, <date> or <codename>
+    #image: ghcr.io/dokuwiki/dokuwiki: # other tags: master, <date> or <codename> via Github Packages
     user: "1000:1000" # adjust to your required user id
     restart: unless-stopped
     ports:
