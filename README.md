@@ -19,7 +19,8 @@ to improve the visibility in the registry.
 * Can be run as non-root user. Be sure the storage volume is writable by the given uid.
 * Available tags: `stable`, `oldstable`, `master` and versions like `2020-07-29a`. `latest` is an alias for `stable`.
 
-An example [docker-compose file](docker-compose.yml) is included in the repository.
+An example [docker-compose file](docker-compose.yml) is included in the repository. The image is also available via
+the [GitHub Package Registry](https://github.com/dokuwiki/docker/pkgs/container/dokuwiki).
 
 On first run, use DokuWiki's [installer](https://www.dokuwiki.org/installer) to configure the wiki as usual.
 
