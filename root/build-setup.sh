@@ -35,6 +35,8 @@ mv /var/www/html/lib/plugins /var/www/html/lib/plugins.core
 ln -s /storage/lib/plugins /var/www/html/lib/plugins
 mv /var/www/html/lib/tpl /var/www/html/lib/tpl.core
 ln -s /storage/lib/tpl /var/www/html/lib/tpl
+mv /var/www/html/lib/images/smileys /var/www/html/lib/images/smileys.core
+ln -s /storage/lib/images/smileys /var/www/html/lib/images/smileys
 
 # delete all build files
 rm -- /build-*
