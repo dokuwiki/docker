@@ -1,2 +1,3 @@
 .github/matrix.cache/
 storage/
+.env
