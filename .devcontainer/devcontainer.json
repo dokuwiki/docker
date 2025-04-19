@@ -1,0 +1,45 @@
+{
+    "name": "dokuwiki",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "vscode",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "features": {
+        "ghcr.io/dhoeric/features/hadolint:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "charliermarsh.ruff",
+                "exiasr.hadolint",
+                "kevinrose.vsc-python-indent",
+                "mosapride.zenkaku",
+                "ms-azuretools.vscode-docker",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "njpwerner.autodocstring",
+                "redhat.vscode-yaml",
+                "shardulm94.trailing-spaces",
+                "tamasfe.even-better-toml",
+                "yzhang.markdown-all-in-one",
+                "humao.rest-client",
+                "ms-python.debugpy",
+                "ms-playwright.playwright",
+                "GitHub.copilot"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "dummy",
+        "PYTHONUNBUFFERED": "True",
+        "UV_LINK_MODE": "copy",
+        "UV_PROJECT_ENVIRONMENT": "/workspace/.venv"
+    },
+    "postCreateCommand": "./.devcontainer/postCreateCommand.sh && uv run pre-commit install",
+    "remoteUser": "vscode",
+    "forwardPorts": [
+        8080
+    ]
+}

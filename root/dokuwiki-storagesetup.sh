@@ -26,4 +26,3 @@ for ext in plugins tpl; do
     ln -s $dir /storage/lib/$ext/$base
   done
 done
-

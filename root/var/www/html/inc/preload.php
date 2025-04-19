@@ -34,4 +34,3 @@ array_unshift(
     '/var/www/html/conf.core/plugins.required.php',
     '/var/www/html/conf.core/plugins.docker.php'
 );
-

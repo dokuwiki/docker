@@ -1,0 +1,51 @@
+[project]
+name = "dokuwiki"
+version = "0.1.0"
+description = "Crossfire Dokuwiki."
+
+keywords = [
+    "crossfire",
+    "dokuwiki",
+    "wiki",
+    "docker",
+]
+
+authors = [{ name = "Bob Tanner", email = "tanner@real-time.com" }]
+
+maintainers = [
+    { name = "Bob Tanner", email = "tanner@real-time.com" },
+    { name = "Rick Tanner", email = "leaf@real-time.com" },
+]
+
+requires-python = ">=3.11"
+readme = "README.md"
+license = { file = "LICENSE" }
+
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+]
+
+dependencies = []
+
+[tool.uv]
+dev-dependencies = [
+    "pre-commit>=4.1.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["tools"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels
+[project.urls]
+Homepage = "https://github.com/crossfire-projects/docker-dokuwiki"
+Documentation = "https://readthedocs.org"
+Repository = "https://github.com/crossfire-projects/docker-dokuwiki.git"
+Issues = "https://github.com/crossfire-projects/docker-dokuwiki/issues"
+Changelog = "https://github.com/crossfire-projects/docker-dokuwiki/blob/main/CHANGELOG.md"

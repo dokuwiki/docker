@@ -23,4 +23,3 @@ try {
     $msg = trim($msg);
     echo $msg;
 }
-

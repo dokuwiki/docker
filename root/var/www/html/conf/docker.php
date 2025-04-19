@@ -7,4 +7,3 @@
 $conf['userewrite'] = 1;
 $conf['im_convert'] = '/usr/bin/convert';
 $conf['xsendfile'] = 2;
-

@@ -70,7 +70,7 @@ jobs:
         run: |
           # Initialize tag arrays
           TAGS=()
-          
+
           # DockerHub Tags
           if [[ "${{ matrix.release.type }}" == "master" ]]; then
             TAGS+=("dokuwiki/dokuwiki:master")
@@ -81,7 +81,7 @@ jobs:
               TAGS+=("dokuwiki/dokuwiki:latest")
             fi
           fi
-          
+
           # GitHub Packages Tags
           if [[ "${{ matrix.release.type }}" == "master" ]]; then
             TAGS+=("ghcr.io/dokuwiki/dokuwiki:master")
@@ -92,7 +92,7 @@ jobs:
               TAGS+=("ghcr.io/dokuwiki/dokuwiki:latest")
             fi
           fi
-          
+
           # Convert array to multiline string for GitHub Actions
           {
             echo "tags<<EOF"

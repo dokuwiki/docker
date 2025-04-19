@@ -126,4 +126,3 @@ if ($result) {
 } else {
     echo "matrix=[]";
 }
-

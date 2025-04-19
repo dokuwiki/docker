@@ -2,7 +2,7 @@
 
 This image is based on the official [PHP Apache image](https://hub.docker.com/_/php) and provides a DokuWiki
 installation. It is meant to be used with a reverse proxy that handles SSL termination and authentication. It's probably
-not worth it to use this image for a standalone installation 
+not worth it to use this image for a standalone installation
 (read [Running DokuWiki on Docker](https://www.patreon.com/posts/42961375) for alternatives). Running Docker without a
 proper understanding of Linux, networking and Docker itself is not recommended. If you are a novice, you should probably
 use a shared hosting provider instead.
