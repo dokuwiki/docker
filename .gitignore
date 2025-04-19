@@ -65,6 +65,7 @@
 .eggs/
 .elasticbeanstalk/*
 .env
+.env
 .env-testing
 .fseventsd
 .github/matrix.cache/
