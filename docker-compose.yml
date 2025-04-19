@@ -5,6 +5,7 @@ services:
     user: "0:0"
     restart: unless-stopped
     environment:
+      TZ: ${TZ}
       PHP_TIMEZONE: ${TZ}
       PHP_MEMORYLIMIT: ${PHP_MEMORYLIMIT}
       PHP_UPLOADLIMIT: ${PHP_UPLOADLIMIT}
@@ -12,23 +13,20 @@ services:
       - ./storage:/storage
     labels:
       - traefik.enable=true
-
       # Allow HTTP and HTTPS
       - traefik.http.routers.dokuwiki-http.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.dokuwiki-http.entrypoints=http
       - traefik.http.routers.dokuwiki-http.service=dokuwiki-service
-
+      # Enable HTTPS
       - traefik.http.routers.dokuwiki-https.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.dokuwiki-https.entrypoints=https
       - traefik.http.routers.dokuwiki-https.tls=true
       - traefik.http.routers.dokuwiki-https.tls.certresolver=le
       - traefik.http.routers.dokuwiki-https.service=dokuwiki-service
-
       # Redirect all other HTTP traffic to HTTPS
       - traefik.http.routers.dokuwiki-http-redir.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.dokuwiki-http-redir.entrypoints=http
       - traefik.http.routers.dokuwiki-http-redir.middlewares=https-redirect@docker
-
       # Define the backend service
       - traefik.http.services.dokuwiki-service.loadbalancer.server.port=8080
     networks:
