@@ -2,9 +2,9 @@ name: Build and Publish Docker Images
 
 on:
   push:
-    branches: [main]
+    branches: [main, devel]
   pull_request:
-    branches: [main]
+    branches: [main, devel]
 
 jobs:
   lint:
@@ -60,6 +60,24 @@ jobs:
           echo "VERSION=$VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Set conditional branch tag
+        id: tagbranch
+        run: |
+          TAGS="basictheprogram/crossfire-dokuwiki:${{ github.sha }}
+          basictheprogram/crossfire-dokuwiki:${{ steps.version.outputs.VERSION }}"
+
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            TAGS="basictheprogram/crossfire-dokuwiki:latest
+            $TAGS"
+          elif [ "${{ github.ref_name }}" = "devel" ]; then
+            TAGS="$TAGS
+            basictheprogram/crossfire-dokuwiki:devel-${{ steps.version.outputs.VERSION }}"
+          fi
+
+          echo "TAGS<<EOF" >> $GITHUB_OUTPUT
+          echo "$TAGS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -67,9 +85,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: |
-            basictheprogram/crossfire-dokuwiki:latest
-            basictheprogram/crossfire-dokuwiki:${{ github.sha }}
-            basictheprogram/crossfire-dokuwiki:${{ steps.version.outputs.VERSION }}
+          tags: ${{ steps.tagbranch.outputs.TAGS }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
