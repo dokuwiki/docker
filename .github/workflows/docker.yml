@@ -64,11 +64,11 @@ jobs:
       - name: Set conditional branch tag
         id: tagbranch
         run: |
-          TAGS="basictheprogram/crossfire-dokuwiki:${{ github.sha }}
-          basictheprogram/crossfire-dokuwiki:${{ steps.version.outputs.VERSION }}"
+          TAGS="basictheprogram/crossfire-dokuwiki:${{ github.sha }}"
 
           if [ "${{ github.ref_name }}" = "main" ]; then
             TAGS="basictheprogram/crossfire-dokuwiki:latest
+            basictheprogram/crossfire-dokuwiki:${{ steps.version.outputs.VERSION }}
             $TAGS"
           elif [ "${{ github.ref_name }}" = "devel" ]; then
             TAGS="$TAGS
