@@ -11,10 +11,10 @@ if [ "$EUID" -eq 0 ]; then
   # make sure we have access to the storage volume
   chown -R www-data:www-data /storage
   # drop privileges and run setup
-  setpriv --reuid=33 --regid=33 --init-groups /dokuwiki-storagesetup.sh
+  setpriv --reuid=33 --regid=33 --init-groups /usr/local/bin/dokuwiki-storagesetup.sh
 else
   # we are already running as unprivileged user, just run setup
-  /dokuwiki-storagesetup.sh
+  /usr/local/bin/dokuwiki-storagesetup.sh
 fi
 
 # run parent image's entrypoint

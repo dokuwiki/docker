@@ -1,6 +1,6 @@
 [project]
 name = "dokuwiki"
-version = "0.1.0"
+version = "2024.2.6b"
 description = "Crossfire Dokuwiki."
 
 keywords = [
@@ -19,7 +19,7 @@ maintainers = [
 
 requires-python = ">=3.11"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = { file = "LICENSE.md" }
 
 # https://pypi.org/classifiers/
 classifiers = [

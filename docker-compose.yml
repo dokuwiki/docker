@@ -1,6 +1,6 @@
 services:
   dokuwiki:
-    image: dokuwiki/dokuwiki:stable
+    image: crossfire-dokuwiki
     container_name: dokuwiki
     user: "0:0"
     restart: unless-stopped
@@ -11,20 +11,28 @@ services:
       PHP_UPLOADLIMIT: ${PHP_UPLOADLIMIT}
     volumes:
       - ./storage:/storage
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail-with-body", "http://localhost:8080/health.php"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "8080:8080"
     labels:
       - traefik.enable=true
       # Allow HTTP and HTTPS
-      - traefik.http.routers.dokuwiki-http.rule=Host(`${DOMAIN1}`) || Host(`${DOMAIN2}`)
+      - traefik.http.routers.dokuwiki-http.rule=Host(`${DOMAIN2}`)
       - traefik.http.routers.dokuwiki-http.entrypoints=http
       - traefik.http.routers.dokuwiki-http.service=dokuwiki-service
       # Enable HTTPS
-      - traefik.http.routers.dokuwiki-https.rule=Host(`${DOMAIN1}`) || Host(`${DOMAIN2}`)
+      - traefik.http.routers.dokuwiki-https.rule=Host(`${DOMAIN2}`)
       - traefik.http.routers.dokuwiki-https.entrypoints=https
       - traefik.http.routers.dokuwiki-https.tls=true
       - traefik.http.routers.dokuwiki-https.tls.certresolver=le
       - traefik.http.routers.dokuwiki-https.service=dokuwiki-service
       # Redirect all other HTTP traffic to HTTPS
-      - traefik.http.routers.dokuwiki-http-redir.rule=Host(`${DOMAIN1}`) || Host(`${DOMAIN2}`)
+      - traefik.http.routers.dokuwiki-http-redir.rule=Host(`${DOMAIN2}`)
       - traefik.http.routers.dokuwiki-http-redir.entrypoints=http
       - traefik.http.routers.dokuwiki-http-redir.middlewares=https-redirect@docker
       # Define the backend service
