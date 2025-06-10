@@ -7,12 +7,12 @@ RewriteRule ^!([^/]+)$      ?animal=$1 [QSA,DPI]
 Options +FollowSymLinks
 
 # pretty urls
-RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
-RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
-RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
+RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L,B]
+RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L,B]
+RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L,B]
 RewriteRule ^$                        doku.php  [L]
 RewriteCond %{REQUEST_FILENAME}       !-f
 RewriteCond %{REQUEST_FILENAME}       !-d
-RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
+RewriteRule (.*)                      doku.php?id=$1  [QSA,L,B]
 RewriteRule ^index.php$               doku.php
 
