@@ -45,6 +45,15 @@ The container runs the standard production php.ini. Some options can be set via 
 
 Custom PHP configuration values can be set in a `php.ini` file in the storage volume.
 
+## Apache Configuration
+
+All rewrite rules DokuWiki needs are part of the Apache host configuration, the image ships no `.htaccess` file. To add
+own directives, create a `.htaccess` file in the storage volume. Own rewrite rules are applied before the built-in ones,
+which keep working and do not have to be repeated. A rule that falls through to the built-in ones needs the `[DPI]` flag,
+otherwise Apache appends the rewritten path a second time.
+
+Be aware that a faulty `.htaccess` makes Apache answer all requests with a 500 error. The reason is logged.
+
 ## Permissions
 
 When the container is started without setting an explicit user id (as the compose file suggests), the image will start as

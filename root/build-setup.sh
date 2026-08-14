@@ -40,5 +40,7 @@ ln -s /storage/lib/plugins /var/www/html/lib/plugins
 mv /var/www/html/lib/tpl /var/www/html/lib/tpl.core
 ln -s /storage/lib/tpl /var/www/html/lib/tpl
 
+ln -s /storage/.htaccess /var/www/html/.htaccess # make it easy to add custom Apache directives
+
 # delete all build files
 rm -- /build-*
