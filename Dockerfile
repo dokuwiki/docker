@@ -1,4 +1,4 @@
-FROM php:8.3-apache AS dokuwiki-base
+FROM php:8.4-apache AS dokuwiki-base
 
 # additional extensions can be passed as build-arg
 ARG PHP_EXTENSIONS=""
