@@ -54,6 +54,11 @@ otherwise Apache appends the rewritten path a second time.
 
 Be aware that a faulty `.htaccess` makes Apache answer all requests with a 500 error. The reason is logged.
 
+The access log shows the client address from the `X-Forwarded-For` header, falling back to the address of the peer that
+opened the connection. That header is not validated, so anything able to reach the container directly can put an
+arbitrary address into the log. `mod_remoteip` is intentionally not used, as overwriting `REMOTE_ADDR` would stop
+DokuWiki from recognizing the reverse proxy and thus break its SSL and host detection.
+
 ## Permissions
 
 When the container is started without setting an explicit user id (as the compose file suggests), the image will start as
